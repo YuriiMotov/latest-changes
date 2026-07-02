@@ -20,4 +20,6 @@ COPY ./latest_changes /app/latest_changes
 
 ENV PYTHONPATH=/app
 
-CMD ["uv", "run", "python", "-m", "latest_changes"]
+# Use the image's baked-in venv directly. `uv run` would execute in the mounted
+# consumer repo and pick up its `.python-version`, provisioning a Python we don't ship.
+CMD ["/app/.venv/bin/python", "-m", "latest_changes"]
